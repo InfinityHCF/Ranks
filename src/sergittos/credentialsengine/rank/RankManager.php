@@ -20,8 +20,16 @@ class RankManager {
     private array $ranks = [];
 
     public function __construct() {
+        $priority = 0;
+
         foreach(json_decode(file_get_contents(CredentialsEngine::getInstance()->getDataFolder() . "ranks.json"), true) as $rank_data) {
-            $this->addRank(new Rank($rank_data["id"], $rank_data["name"], $rank_data["color"], $rank_data["permissions"]));
+            $this->addRank(new Rank(
+                $rank_data["id"],
+                $rank_data["name"],
+                $rank_data["color"],
+                $rank_data["permissions"],
+                $priority++
+            ));
         }
     }
 

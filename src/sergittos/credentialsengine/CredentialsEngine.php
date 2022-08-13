@@ -14,6 +14,7 @@ namespace sergittos\credentialsengine;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
+use sergittos\credentialsengine\command\ListCommand;
 use sergittos\credentialsengine\listener\ChatFormatListener;
 use sergittos\credentialsengine\listener\SessionListener;
 use sergittos\credentialsengine\provider\mysql\MysqlProvider;
@@ -44,7 +45,10 @@ class CredentialsEngine extends PluginBase {
         $this->registerEvents(new ChatFormatListener());
         $this->registerEvents(new SessionListener());
 
-        $this->getServer()->getCommandMap()->register("ranks", new RanksCommand());
+        ($map = $this->getServer()->getCommandMap())->unregister($map->getCommand('list'));
+
+        $map->register("ranks", new RanksCommand());
+        $map->register('list', new ListCommand('list'));
     }
 
     protected function onDisable(): void {
