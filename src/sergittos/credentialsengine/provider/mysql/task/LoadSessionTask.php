@@ -59,7 +59,9 @@ class LoadSessionTask extends MysqlTask {
         if($player !== null) {
             $result = $this->getResult();
             $session = SessionFactory::getSession($player);
-            $session->setRank(CredentialsEngine::getInstance()->getRankManager()->getRankById($result["rank_id"]));
+			
+            $session->setRank(CredentialsEngine::getInstance()->getRankManager()->getRankById($result["rank_id"] ?? 'guest'));
+            $session->setCoins($result["coins"] ?? 0);
         }
     }
 

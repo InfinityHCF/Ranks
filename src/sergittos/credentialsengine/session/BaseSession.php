@@ -17,7 +17,8 @@ class BaseSession {
 
     protected string $lowercase_name;
     protected string $username;
-    protected string $rank_id;
+    protected string $rank_id = 'guest';
+    protected int $coins = 0;
 
     public function __construct(string $username) {
         $this->username = $username;
