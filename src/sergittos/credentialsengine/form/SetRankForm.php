@@ -14,6 +14,7 @@ namespace sergittos\credentialsengine\form;
 use EasyUI\variant\SimpleForm;
 use sergittos\credentialsengine\CredentialsEngine;
 use sergittos\credentialsengine\session\OfflineSession;
+use sergittos\credentialsengine\utils\ColorUtils;
 
 class SetRankForm extends SimpleForm {
 
@@ -26,7 +27,7 @@ class SetRankForm extends SimpleForm {
 
     protected function onCreation(): void {
         foreach(CredentialsEngine::getInstance()->getRankManager()->getRanks() as $rank) {
-            $this->addRedirectFormButton($rank->getName(), new SetRankConfirmationForm($this->session, $rank));
+            $this->addRedirectFormButton(ColorUtils::translate($rank->getColoredName()), new SetRankConfirmationForm($this->session, $rank));
         }
     }
 

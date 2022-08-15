@@ -8,7 +8,7 @@
 declare(strict_types=1);
 
 
-namespace sergittos\credentialsengine;
+namespace sergittos\credentialsengine\command;
 
 
 use pocketmine\command\Command;
@@ -22,9 +22,8 @@ use sergittos\credentialsengine\form\RanksForm;
 class RanksCommand extends Command {
 
     public function __construct() {
-        $permission = "command.ranks";
         $manager = PermissionManager::getInstance();
-        $manager->addPermission(new Permission($permission));
+        $manager->addPermission(new Permission($permission = "command.ranks"));
         $manager->getPermission(DefaultPermissions::ROOT_OPERATOR)->addChild($permission, true);
 
         $this->setPermission($permission);

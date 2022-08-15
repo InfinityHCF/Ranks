@@ -13,20 +13,19 @@ namespace sergittos\credentialsengine\rank;
 
 class Rank {
 
-    /**
-     * @param string $id
-     * @param string $name
-     * @param string $color
-     * @param array  $permissions
-     * @param int    $priority
-     */
-    public function __construct(
-        private string $id,
-        private string $name,
-        private string $color,
-        private array $permissions,
-        private int $priority
-    ) {}
+    private string $id;
+    private string $name;
+    private string $color;
+
+    /** @var string[] */
+    private array $permissions;
+
+    public function __construct(string $id, string $name, string $color, array $permissions) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->color = $color;
+        $this->permissions = $permissions;
+    }
 
     public function getId(): string {
         return $this->id;
@@ -40,6 +39,10 @@ class Rank {
         return $this->color;
     }
 
+    public function getColoredName(): string {
+        return $this->color . $this->name;
+    }
+
     /**
      * @return string[]
      */
@@ -47,10 +50,4 @@ class Rank {
         return $this->permissions;
     }
 
-    /**
-     * @return int
-     */
-    public function getPriority(): int {
-        return $this->priority;
-    }
 }

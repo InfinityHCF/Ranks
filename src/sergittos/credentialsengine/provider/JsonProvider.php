@@ -42,7 +42,7 @@ class JsonProvider extends Provider {
     }
 
     private function getSessionConfig(BaseSession $session): Config {
-        $config = new Config(CredentialsEngine::getInstance()->getDataFolder() . "players/" . $session->getUsername() . ".json", Config::JSON);
+        $config = new Config(CredentialsEngine::getInstance()->getDataFolder() . "players/" . $session->getLowercaseName() . ".json", Config::JSON);
         if(!$config->exists("rank_id")) {
             $config->set("rank_id", ConfigGetter::getDefaultRankId());
             $config->save();

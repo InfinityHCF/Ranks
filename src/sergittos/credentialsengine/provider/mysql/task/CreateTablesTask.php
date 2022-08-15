@@ -19,8 +19,7 @@ class CreateTablesTask extends MysqlTask {
         $mysqli->query(
             "CREATE TABLE IF NOT EXISTS users (
                 username VARCHAR(16) PRIMARY KEY,
-                rank_id VARCHAR(100),
-                coins INT
+                rank_id VARCHAR(100)
             )"
         );
     }

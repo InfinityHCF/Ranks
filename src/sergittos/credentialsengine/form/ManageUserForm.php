@@ -15,6 +15,7 @@ use EasyUI\element\Input;
 use EasyUI\utils\FormResponse;
 use EasyUI\variant\CustomForm;
 use pocketmine\player\Player;
+use sergittos\credentialsengine\CredentialsEngine;
 use sergittos\credentialsengine\session\SessionFactory;
 
 class ManageUserForm extends CustomForm {
@@ -28,7 +29,10 @@ class ManageUserForm extends CustomForm {
     }
 
     protected function onSubmit(Player $player, FormResponse $response): void {
-        $player->sendForm(new UserOptionsForm(SessionFactory::getOfflineSession($response->getInputSubmittedText("username"))));
+        $session = SessionFactory::getOfflineSession($response->getInputSubmittedText("username"));
+        $session->load();
+
+        $player->sendForm(new UserOptionsForm($session));
     }
 
 }

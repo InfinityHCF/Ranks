@@ -19,21 +19,19 @@ class SaveSessionTask extends MysqlTask {
 
     private string $username;
     private string $rank_id;
-    private int $coins;
 
     public function __construct(MysqlProvider $provider, BaseSession $session) {
-        $this->username = $session->getUsername();
+        $this->username = $session->getLowercaseName();
         $this->rank_id = $session->getRankId();
-        $this->coins = $session->getCoins();
         parent::__construct($provider);
     }
 
     public function execute(mysqli $mysqli): void {
         $rank_id = $this->rank_id;
-        $coins = $this->coins;
         $username = $this->username;
-        $statement = $mysqli->prepare("UPDATE users SET rank_id = ?, coins = ? WHERE username = ?");
-        $statement->bind_param("sis", $rank_id, $coins, $username);
+        
+        $statement = $mysqli->prepare("UPDATE users SET rank_id = ? WHERE username = ?");
+        $statement->bind_param("ss", $rank_id, $username);
         $statement->execute();
     }
 

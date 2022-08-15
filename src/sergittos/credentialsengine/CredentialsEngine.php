@@ -11,10 +11,12 @@ declare(strict_types=1);
 namespace sergittos\credentialsengine;
 
 
+use pocketmine\command\Command;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
-use sergittos\credentialsengine\command\ListCommand;
+use sergittos\credentialsengine\command\RanksCommand;
+use sergittos\credentialsengine\command\SetRankCommand;
 use sergittos\credentialsengine\listener\ChatFormatListener;
 use sergittos\credentialsengine\listener\SessionListener;
 use sergittos\credentialsengine\provider\mysql\MysqlProvider;
@@ -42,19 +44,21 @@ class CredentialsEngine extends PluginBase {
         $this->provider = new MysqlProvider();
         $this->rank_manager = new RankManager();
 
-        $this->registerEvents(new ChatFormatListener());
+        // $this->registerEvents(new ChatFormatListener());
         $this->registerEvents(new SessionListener());
 
-        ($map = $this->getServer()->getCommandMap())->unregister($map->getCommand('list'));
-
-        $map->register("ranks", new RanksCommand());
-        $map->register('list', new ListCommand('list'));
+        $this->registerCommand(new RanksCommand());
+        $this->registerCommand(new SetRankCommand());
     }
 
     protected function onDisable(): void {
         foreach(SessionFactory::getSessions() as $session) {
             $session->save();
         }
+    }
+
+    private function registerCommand(Command $command): void {
+        $this->getServer()->getCommandMap()->register("ranks", $command);
     }
 
     private function registerEvents(Listener $listener): void {

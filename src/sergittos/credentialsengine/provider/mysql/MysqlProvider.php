@@ -21,6 +21,10 @@ use sergittos\credentialsengine\CredentialsEngine;
 use sergittos\credentialsengine\session\BaseSession;
 use sergittos\credentialsengine\session\OfflineSession;
 use sergittos\credentialsengine\utils\ConfigGetter;
+use function basename;
+use function strrpos;
+use function substr;
+use function var_dump;
 
 class MysqlProvider extends Provider {
 
@@ -30,7 +34,7 @@ class MysqlProvider extends Provider {
         $this->credentials = MysqlCredentials::fromData(ConfigGetter::getMysqlCredentials());
         $this->submitTask(new CreateTablesTask($this));
 
-        $this->transferJsonPlayerData();
+        // $this->transferJsonPlayerData();
     }
 
     public function loadSession(BaseSession $session): void {
@@ -53,8 +57,8 @@ class MysqlProvider extends Provider {
         foreach(glob($players_dir . "/*.json") as $file_name) {
             foreach(json_decode(file_get_contents($file_name), true) as $rank_id) {
                 $session = new OfflineSession(basename(substr($file_name, 0, strrpos($file_name, "."))));
-                $session->setRankId($rank_id);
                 $this->loadSession($session);
+                $session->setRankId($rank_id);
                 $this->saveSession($session);
             }
             unlink($file_name);
