@@ -42,7 +42,7 @@ class CredentialsEngine extends PluginBase {
         $this->provider = new MysqlProvider();
         $this->rank_manager = new RankManager();
 
-        $this->registerEvents(new ChatFormatListener());
+        //$this->registerEvents(new ChatFormatListener());
         $this->registerEvents(new SessionListener());
 
         ($map = $this->getServer()->getCommandMap())->unregister($map->getCommand('list'));

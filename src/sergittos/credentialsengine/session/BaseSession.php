@@ -16,8 +16,8 @@ use sergittos\credentialsengine\CredentialsEngine;
 class BaseSession {
 
     protected string $username;
-    protected string $rank_id;
-    protected int $coins;
+    protected string $rank_id = 'guest';
+    protected int $coins = 0;
 
     public function __construct(string $username) {
         $this->username = strtolower($username);

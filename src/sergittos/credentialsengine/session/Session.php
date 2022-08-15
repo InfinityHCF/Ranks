@@ -15,6 +15,7 @@ use DidntPot\LobbyCore;
 use DidntPot\player\session\SessionHandler;
 use DidntPot\player\session\SessionIdentifier;
 use pocketmine\player\Player;
+use pocketmine\plugin\PluginException;
 use sergittos\credentialsengine\rank\Rank;
 use sergittos\credentialsengine\CredentialsEngine;
 use sergittos\credentialsengine\utils\ColorUtils;
@@ -28,6 +29,8 @@ class Session extends BaseSession {
 
     public function __construct(Player $player) {
         $this->player = $player;
+        $this->rank = CredentialsEngine::getInstance()->getRankManager()->getDefaultRank() ?? throw new PluginException('invalid default rank');
+
         parent::__construct($player->getName());
         CredentialsEngine::getInstance()->getProvider()->loadSession($this);
     }
