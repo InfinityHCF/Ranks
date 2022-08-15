@@ -56,13 +56,20 @@ class LoadSessionTask extends MysqlTask {
 
     public function onCompletion(): void {
         $player = Server::getInstance()->getPlayerExact($this->username);
-        if($player !== null) {
-            $result = $this->getResult();
-            $session = SessionFactory::getSession($player);
-			
-            $session->setRank(CredentialsEngine::getInstance()->getRankManager()->getRankById($result["rank_id"] ?? 'guest'));
-            $session->setCoins($result["coins"] ?? 0);
+        if($player === null) {
+            return;
         }
+
+        $result = $this->getResult();
+        $session = SessionFactory::getSession($player);
+
+        if ($session === null) {
+            $player->kick('An error occurred while tried load your session');
+
+            return;
+        }
+
+        $session->setRank(CredentialsEngine::getInstance()->getRankManager()->getRankById($result["rank_id"] ?? 'guest'));
     }
 
 }
