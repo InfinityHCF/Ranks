@@ -14,6 +14,7 @@ namespace sergittos\credentialsengine\form;
 use EasyUI\element\ModalOption;
 use EasyUI\variant\ModalForm;
 use pocketmine\player\Player;
+use sergittos\credentialsengine\CredentialsEngine;
 use sergittos\credentialsengine\rank\Rank;
 use sergittos\credentialsengine\session\OfflineSession;
 
@@ -36,6 +37,7 @@ class SetRankConfirmationForm extends ModalForm {
     }
 
     protected function onAccept(Player $player): void {
+        $this->session->setRankId($this->rank->getId());
         if($this->session->hasOnlineSession()) {
             $this->session->getOnlineSession()->setRank($this->rank);
         } else {

@@ -17,6 +17,7 @@ use sergittos\credentialsengine\provider\mysql\task\CreateTablesTask;
 use sergittos\credentialsengine\provider\mysql\task\LoadSessionTask;
 use sergittos\credentialsengine\provider\mysql\task\MysqlTask;
 use sergittos\credentialsengine\provider\mysql\task\SaveSessionTask;
+use sergittos\credentialsengine\provider\mysql\task\SetRankTask;
 use sergittos\credentialsengine\provider\Provider;
 use sergittos\credentialsengine\CredentialsEngine;
 use sergittos\credentialsengine\session\BaseSession;
@@ -44,7 +45,11 @@ class MysqlProvider extends Provider {
     }
 
     public function saveSession(BaseSession $session): void {
-        $this->submitTask(new SaveSessionTask($this, $session));
+        // $this->submitTask(new SaveSessionTask($this, $session));
+    }
+
+    public function setRank(BaseSession $session): void {
+        $this->submitTask(new SetRankTask($this, $session, $session->getRankId()));
     }
 
     public function checkRank(Session $session): void {

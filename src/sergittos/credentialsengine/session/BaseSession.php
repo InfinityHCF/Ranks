@@ -39,6 +39,7 @@ class BaseSession {
 
     public function setRankId(string $rank_id): void {
         $this->rank_id = $rank_id;
+        CredentialsEngine::getInstance()->getProvider()->setRank($this);
     }
 
     public function load(): void {

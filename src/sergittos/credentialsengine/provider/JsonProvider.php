@@ -41,6 +41,10 @@ class JsonProvider extends Provider {
         $config->save();
     }
 
+    public function setRank(BaseSession $session): void {
+        $this->saveSession($session);
+    }
+
     public function checkRank(Session $session): void {
         $this->loadSession($session);
     }

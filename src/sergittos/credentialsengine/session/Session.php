@@ -46,7 +46,7 @@ class Session extends BaseSession {
     }
 
     public function setRank(Rank $rank): void {
-        $this->rank_id = $rank->getId();
+        $this->setRankId($rank->getId());
         $this->rank = $rank;
 
         // $this->updateNameTag();
