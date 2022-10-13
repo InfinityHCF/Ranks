@@ -12,6 +12,7 @@ namespace sergittos\credentialsengine\session;
 
 
 use pocketmine\player\Player;
+use function strtolower;
 
 class SessionFactory {
 
@@ -26,7 +27,11 @@ class SessionFactory {
     }
 
     static public function getSession(Player $player): ?Session {
-        return self::$sessions[$player->getName()] ?? null;
+        return self::$sessions[strtolower($player->getName())] ?? null;
+    }
+
+    static public function getSessionByName(string $username): ?Session {
+        return self::$sessions[strtolower($username)] ?? null;
     }
 
     static public function getOfflineSession(string $username): OfflineSession {
@@ -34,11 +39,11 @@ class SessionFactory {
     }
 
     static public function createSession(Player $player): void {
-        self::$sessions[$player->getName()] = new Session($player);
+        self::$sessions[strtolower($player->getName())] = new Session($player);
     }
 
     static public function removeSession(Player $player): void {
-        $session = self::$sessions[$username = $player->getName()];
+        $session = self::$sessions[$username = strtolower($player->getName())];
         $session->save();
 
         unset(self::$sessions[$username]);

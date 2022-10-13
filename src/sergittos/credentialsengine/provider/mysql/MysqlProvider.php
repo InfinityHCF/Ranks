@@ -12,6 +12,7 @@ namespace sergittos\credentialsengine\provider\mysql;
 
 
 use pocketmine\Server;
+use sergittos\credentialsengine\provider\mysql\task\CheckRankTask;
 use sergittos\credentialsengine\provider\mysql\task\CreateTablesTask;
 use sergittos\credentialsengine\provider\mysql\task\LoadSessionTask;
 use sergittos\credentialsengine\provider\mysql\task\MysqlTask;
@@ -20,6 +21,7 @@ use sergittos\credentialsengine\provider\Provider;
 use sergittos\credentialsengine\CredentialsEngine;
 use sergittos\credentialsengine\session\BaseSession;
 use sergittos\credentialsengine\session\OfflineSession;
+use sergittos\credentialsengine\session\Session;
 use sergittos\credentialsengine\utils\ConfigGetter;
 use function basename;
 use function strrpos;
@@ -43,6 +45,10 @@ class MysqlProvider extends Provider {
 
     public function saveSession(BaseSession $session): void {
         $this->submitTask(new SaveSessionTask($this, $session));
+    }
+
+    public function checkRank(Session $session): void {
+        $this->submitTask(new CheckRankTask($this, $session));
     }
 
     private function submitTask(MysqlTask $task): void {

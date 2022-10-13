@@ -41,6 +41,10 @@ class JsonProvider extends Provider {
         $config->save();
     }
 
+    public function checkRank(Session $session): void {
+        $this->loadSession($session);
+    }
+
     private function getSessionConfig(BaseSession $session): Config {
         $config = new Config(CredentialsEngine::getInstance()->getDataFolder() . "players/" . $session->getLowercaseName() . ".json", Config::JSON);
         if(!$config->exists("rank_id")) {

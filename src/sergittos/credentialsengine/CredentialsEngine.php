@@ -16,6 +16,7 @@ use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
+use sergittos\credentialsengine\command\CheckRankCommand;
 use sergittos\credentialsengine\command\ListCommand;
 use sergittos\credentialsengine\command\RanksCommand;
 use sergittos\credentialsengine\command\SetRankCommand;
@@ -52,8 +53,8 @@ class CredentialsEngine extends PluginBase {
         // $this->registerEvents(new ChatFormatListener());
         $this->registerEvents(new SessionListener());
 
+        $this->registerCommand(new CheckRankCommand());
         $this->registerCommand(new RanksCommand());
-        $this->registerCommand(new SetRankCommand());
         $this->registerCommand(new ListCommand('list'));
     }
 
